@@ -32,9 +32,9 @@ export class FontSize extends Component {
 			{label}
 		</span>
 		<table style={{width:"100%",fontSize:11}}>
-			<tr><td>{"Small"}</td><td><input name="FontSize" value= "12" checked type="radio"/></td></tr>
-			<tr><td>{"Normal"}</td><td><input name="FontSize" value= "14"  type="radio"/></td></tr>
-			<tr><td>{"Large"}</td><td><input name="FontSize" value= "16"  type="radio"/></td></tr>
+			<tr><td>{"Small"}</td><td><input name="FontSize" value= "11px" checked type="radio"/></td></tr>
+			<tr><td>{"Normal"}</td><td><input name="FontSize" value= "13px"  type="radio"/></td></tr>
+			<tr><td>{"Large"}</td><td><input name="FontSize" value= "15px"  type="radio"/></td></tr>
 		</table>
 		</>
 		);
@@ -84,6 +84,7 @@ export class PopUp extends Component {
   };
   
 	applySettings =()=>{
+	   this.props.updateSettings();
 		var fontSize ="";
 		var rowHeight ="";
 		 var ele = document.getElementsByName('FontSize'); 
@@ -97,9 +98,7 @@ export class PopUp extends Component {
 				if(ele1[i].checked) 
 					rowHeight= ele1[i].value; 
             } 
-		
-		ReactDOM.render(<div><Header/><Filter/><Table fontsize={fontSize} rowHeight={rowHeight}/></div>, document.getElementById('root'));
-		
+		this.props.updateSettings(fontSize);
 		this.props.toggle();
 	}
 	render() {
@@ -123,7 +122,23 @@ export class PopUp extends Component {
 	<div id = "SaveSattings" style={this.settingsSaveStyle}>
 				<div style={{fontWeight:"bold", position:"absolute", width:"30%", left:"40%", bottom:10}}>
 					<button id ="DiscardBtn" onClick={this.handleClick} style={{padding: "5px 15px",border: "none",outline: "none",backgroundColor: "#cccccc",color:"#8c8c8c" }}> DISCARD</button>
-					<button id ="ApplyBtn" onClick={this.applySettings} style={{padding: "5px 15px",border: "none",outline: "none",backgroundColor: "#8c8c8c",color:"white"}}>APPLY</button>
+					<button id ="ApplyBtn" onClick= {() =>{
+//						this.props.updateSettings("abc");
+						var fontSize ="";
+						var rowHeight ="";
+						var ele = document.getElementsByName('FontSize'); 
+						for(var i = 0; i < ele.length; i++) { 
+							if(ele[i].checked) 
+							fontSize= ele[i].value; 
+						}
+						var ele1 = document.getElementsByName('rowHeight'); 
+						for(i = 0; i < ele.length; i++) { 
+							if(ele1[i].checked) 
+								rowHeight= ele1[i].value; 
+						} 
+						this.props.updateSettings(fontSize);
+						this.handleClick();
+						} }style={{padding: "5px 15px",border: "none",outline: "none",backgroundColor: "#8c8c8c",color:"white"}}>APPLY</button>
 				</div>
 	
 	 </div>
@@ -165,8 +180,10 @@ class Header extends React.Component {
 	});
 	};
 	
-
-
+	
+	updateFunction = (val)=>{
+		this.props.updateSettings(val);
+	}
 
 	openRequestedPopup =()=> {
 	var windowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
@@ -182,7 +199,7 @@ class Header extends React.Component {
 		<span style={this.spanstyle} id="settingIcon" onClick={this.togglePop}>
 		<img src={setting} class="js-btn" alt="Carraro" width="23px" height="23px" />
 		</span>
-		{this.state.seen ? <PopUp toggle={this.togglePop} /> : null}
+		{this.state.seen ? <PopUp toggle={this.togglePop} updateSettings ={this.updateFunction} /> : null}
 		<span style={this.spanstyle1}>
 		<form><input type="text" placeholder ="Find On Page" class="searchPage"/></form>
 		</span>

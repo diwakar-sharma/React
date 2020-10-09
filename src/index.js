@@ -13,16 +13,32 @@ import Filter from './Filter.js';
 
 
 export default class Body extends React.Component {
+	constructor(){
+		super();
+		this.state={
+			tableFontSize:"11px"
+		};
+	}
 	
-	  render() {
-		var fontSize = this.props.fontSize;
+/*	updateSettings = () =>{
+		this.setState({
+			tableFontSize:"5px"
+		});
+		alert("this.setState:"+this.state.tableFontSize);
+	}
+*/
+  updateSettings = (val) => {
+	//alert("this.setState:"+val);
+	this.setState({
+			tableFontSize:val
+		});
+		this.forceUpdate();
+  }
+  
+	render() {
 		var rowHeight = this.props.rowHeight;
-		//			alert("fontsize:"+this.props.fontsize);
-		//	alert("rowHeight:"+this.props.rowHeight);
-
-	 	return <div><Header/><Filter/><Table fontsize={fontSize} rowHeight={rowHeight}/></div>;
-	//return <div><Header/><Table/></div>;
+		return <div><Header updateSettings = {this.updateSettings}/><Filter/><Table fontSize={this.state.tableFontSize} rowHeight={rowHeight}/></div>;
   }
 }
 
-ReactDOM.render(<div><Header/><Filter/><Table/></div>, document.getElementById('root'));
+ReactDOM.render(<Body/>, document.getElementById('root'));

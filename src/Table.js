@@ -11,6 +11,11 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 import './styles/dashboardstyles.css';
 
+
+var colorIndex = 3;
+var colors = ['12px', '13px', '14px', '20px'];
+var fontsize = '12px';
+
 export default class Table extends React.Component {
 	
 	constructor(props){
@@ -21,8 +26,9 @@ export default class Table extends React.Component {
 			height:"90vh",
 			minWidth :"90%"
 		};
-		var cellfontSize = "12px";
-		
+
+		//var cellfontSize = this.props.fontSize;
+		//alert("cellfontSize:"+cellfontSize);
 		this.state = {
          columnDefs: [
 			 {  headerName: "Type",
@@ -89,21 +95,30 @@ export default class Table extends React.Component {
 			   ],
 			   defaultColDef: {
                /*flex: 1,*/
-             cellStyle:{"fontSize" : cellfontSize ,"textAlign": "left"}
+            /* cellStyle:{"fontSize" : cellfontSize ,"textAlign": "left"}*/
 	  },
 
-			   	   rowData: []
+			   	   rowData: [],
+				    getRowStyle: function () {
+        return { fontSize: fontsize };
+      }
     }
+	
 	}
 	
-	
-	
+	componentDidUpdate(previousProps, previousState) {
+		/*if(colorIndex==3)
+		colorIndex= 0
+			else 
+		colorIndex++
+	    */
+		fontsize = this.props.fontSize;
+		this.gridApi.redrawRows();
+	}
 	onGridReady = params => {
     this.gridApi = params.api;
 	this.gridApi.setHeaderHeight(25);
 	var updateData =(data)=>{
-
-		
 		this.setState({rowData:data});
 	}
 	// 	     const httpRequest = new XMLHttpRequest();
@@ -138,6 +153,7 @@ getRowHeight = (params) => {
 		  getRowHeight={this.getRowHeight}
 		  onGridReady={this.onGridReady}
 		  frameworkComponents={this.state.frameworkComponents}
+		  getRowStyle={this.state.getRowStyle}
 		  >
         </AgGridReact>
 		</div>;

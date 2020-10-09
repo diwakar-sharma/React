@@ -220,39 +220,6 @@ class CustomStatsToolPanel  extends React.Component {
 	 }
 
 
-/*
-	repopulateCheckbox =(param)=>{
-		var ele1 = document.getElementById("SpanShow"+param);
-		var ele2 = document.getElementById("FieldId"+param);
-		var ele3= document.getElementById("Submit").value;
-		var showValue =ele1.innerHTML
-		alert("ele2.value:"+ele2.value);
-		if(showValue)
-			showValue =showValue.trim();
-		if (param=="10")
-			return;
-		if(ele3!="true"){
-		if(ele2)
-			ele2.value = showValue;
-		var arr2 =  document.getElementsByName("checkbox"+param)
-		if(arr2){
-			for (var j=0; j<arr2.length; j++ ){
-				if(showValue.toUpperCase()=="ALL"||arr2[j].value==showValue)
-					arr2[j].checked=true;
-				else 
-					arr2[j].checked=false;
-			}
-			}
-		}
-		if(showValue.toUpperCase()=="ALL"){
-			var ele4 = document.getElementById("checkbox"+param+"Multi");
-			if(ele4){
-				ele4.checked=true;
-			}
-			
-		}
-	}
-	*/
 	repopulateCheckbox =(param)=>{
 		var ele1 = document.getElementById("SpanShow"+param);
 		var ele2 = document.getElementById("FieldId"+param);
@@ -392,10 +359,11 @@ class CustomStatsToolPanel  extends React.Component {
 
 					arr2[j].disabled= false;
 				}
+				
 			}
-		}
+			alert(this.state.types);
 	}
-
+	}
 
 	
 	

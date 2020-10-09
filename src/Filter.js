@@ -1,14 +1,7 @@
 //For React
 import React from 'react';
-
-
-
 import CustomStatsToolPanel from './CustomStatsComponent.jsx';
-
 import expanded from './images/expanded.svg';
-
-
-
 //For Grid
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
