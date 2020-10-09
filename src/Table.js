@@ -15,6 +15,7 @@ import './styles/dashboardstyles.css';
 var colorIndex = 3;
 var colors = ['12px', '13px', '14px', '20px'];
 var fontsize = '12px';
+var rowHeight = 20;
 
 export default class Table extends React.Component {
 	
@@ -94,13 +95,14 @@ export default class Table extends React.Component {
 			
 			   ],
 			   defaultColDef: {
+				/*wrapText: true,*/
                /*flex: 1,*/
             /* cellStyle:{"fontSize" : cellfontSize ,"textAlign": "left"}*/
 	  },
 
 			   	   rowData: [],
 				    getRowStyle: function () {
-        return { fontSize: fontsize };
+        return { fontSize: fontsize ,verticalAlign: "middle"};
       }
     }
 	
@@ -113,6 +115,8 @@ export default class Table extends React.Component {
 		colorIndex++
 	    */
 		fontsize = this.props.fontSize;
+		//rowHeight = this.props.rowHeight;
+		//alert("rowHeight:"+rowHeight);
 		this.gridApi.redrawRows();
 	}
 	onGridReady = params => {
@@ -138,7 +142,7 @@ export default class Table extends React.Component {
   };
   
 getRowHeight = (params) => {
-    return 20;
+    return rowHeight;
   };
 
 	prepareTable= ()=>{
