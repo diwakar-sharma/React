@@ -361,7 +361,7 @@ class CustomStatsToolPanel  extends React.Component {
 				}
 				
 			}
-			alert(this.state.types);
+			//alert(this.state.types);
 	}
 	}
 

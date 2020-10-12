@@ -32,7 +32,14 @@ export class RowHeightSetting extends Component {
 		componentDidMount() {
 		// your source code to load initial data
 		var ele = document.getElementsByName('rowHeight'); 
-		var val  = getValueFromBrowserCache().rowHeight;
+		var val1 = document.getElementsByName('RowHeightHiddenField').value; 
+		//var val  ="13px";
+		var val ="";
+		if(val1)
+			val = val1;
+		else 
+		    val  = getValueFromBrowserCache().rowHeight;
+		
 		for(var i = 0; i < ele.length; i++) { 
 			if(ele[i].value===val) 
 				ele[i].checked=true;
@@ -45,10 +52,11 @@ export class RowHeightSetting extends Component {
 		<span style={{width:"100%",fontSize:15, fontWeight:"bold"}}>
 			{label}
 		</span>
+		<input type="hidden" id = "RowHeightHiddenField"/>
 		<table style={{width:"100%",fontSize:11}}>
-			<tr><td>{"Compact"}</td><td><input name="rowHeight" value= "20" type="radio"/></td></tr>
+			<tr><td>{"Compact"}</td><td><input name="rowHeight" value="20" type="radio"/></td></tr>
 			<tr><td>{"Normal"}</td><td><input name="rowHeight" value= "23"  type="radio"/></td></tr>
-			<tr><td>{"Wide"}</td><td><input name="rowHeight" value= "25" type="radio"/></td></tr>
+			<tr><td>{"Wide"}</td><td><input name="rowHeight" value= "26" type="radio"/></td></tr>
 		</table>
 		</>
 		);
@@ -59,9 +67,13 @@ export class FontSize extends Component {
 	componentDidMount() {
 		// your source code to load initial data
 		var ele = document.getElementsByName('FontSize'); 
+		var val1 = document.getElementsByName('FontSizeHiddenField').value; 
 		//var val  ="13px";
-		var val  = getValueFromBrowserCache().fontSize;
-		
+		var val ="";
+		if(val1)
+			val = val1;
+		else 
+		    val  = getValueFromBrowserCache().fontSize;
 		for(var i = 0; i < ele.length; i++) { 
 			if(ele[i].value===val) 
 				ele[i].checked=true;
@@ -73,6 +85,7 @@ export class FontSize extends Component {
 		return (<>
 		<span style={{width:"100%",fontSize:15, fontWeight:"bold"}}>
 			{label}
+			<input type="hidden" id = "FontSizeHiddenField"/>
 		</span>
 		<table style={{width:"100%",fontSize:11}}>
 			<tr><td>{"Small"}</td><td><input name="FontSize" value= "11px"  type="radio"/></td></tr>
@@ -198,7 +211,11 @@ export class PopUp extends Component {
 							} else {
 								save = "";
 							}
-						} 
+						}
+						
+						document.getElementsByName('RowHeightHiddenField').value =rowHeight;
+						document.getElementsByName('FontSizeHiddenField').value =fontSize;
+						 
 						this.props.updateSettings(fontSize , rowHeight ,save );
 						this.handleClick();
 						} }style={{padding: "5px 15px",border: "none",outline: "none",backgroundColor: "#8c8c8c",color:"white"}}>APPLY</button>

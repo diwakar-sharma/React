@@ -34,8 +34,9 @@ export default class Table extends React.Component {
          columnDefs: [
 			 {  headerName: "Type",
 				field: "attr_CRRTestType",
-				width : 70, 
-				flex: 1
+				/*width : 70, */
+				width : 50, 
+				/*flex: 1*/
 			},
 			 { headerName: "Name", 
 			 field: "name",
@@ -44,34 +45,37 @@ export default class Table extends React.Component {
 			 { headerName: "State", 
 			 field: 'status',
 			 width  : 90,
-			 flex: 1
+			 /*flex: 1*/
 			},
 			 { headerName: "Prospect P/N",
 			  field: 'attr_CRRPartNumber', 
-			  width  : 135 ,
+			  width  : 100 ,
 			},
 			 { headerName: "Prospect",
 			  field: 'attr_CRRProspectReference',
-			  width  : 125 ,
-			  flex: 1
+			  width  : 115 ,
+			  /*flex: 1*/
 			},
 			 { headerName: "Product Range", 
 			 field: "prospect_product_range",
-			 width  : 125, 
+			 width  : 120, 
 			 
 			},
 			 { headerName: "Originator", 
 			 field: "attr_Originator_show",
-			 width  : 120 , 
+			 width  : 160 , 
+			 //width  : "auto" , 
 			 
 			},
 			 { headerName: "Technician", 
 			 field: "attr_CRRBenchSpecialist_show",
-			  width  : 135 ,
+			 width  : 160 ,
+			  //width  : "auto" , 
 			},
 			 { headerName: "Bench", 
 			 field: "attr_CRRTestBench_show",
-			  width : 100 , 
+			 width  : 160 ,
+			  //width  : "auto" , 
 		
 			},
 			 { headerName: "Test End Date", 
@@ -83,9 +87,8 @@ export default class Table extends React.Component {
 			 width : 80, 
 			},
 			{ headerName: "Doc", 
-			 maxWidth : 80, 
-			 minWidth : 60, 
-			 flex: 1,
+			width : 50, 
+			 /*flex: 1,*/
 			 cellRenderer: function(params) {
 					let newLink = '<img src="'+docicon+'" alt="Carraro" />';
 					return newLink;
@@ -102,7 +105,7 @@ export default class Table extends React.Component {
 
 			   	   rowData: [],
 				    getRowStyle: function () {
-        return { fontSize: fontsize ,verticalAlign: "middle"};
+        return { fontSize: fontsize ,verticalAlign: "middle" , align:"center" , height: rowHeight };
       }
     }
 	
@@ -115,8 +118,15 @@ export default class Table extends React.Component {
 		colorIndex++
 	    */
 		fontsize = this.props.fontSize;
-		//rowHeight = this.props.rowHeight;
+		rowHeight = parseInt(this.props.rowHeight);
 		//alert("rowHeight:"+rowHeight);
+		
+		
+		this.gridApi.forEachNode(function (rowNode) {
+			//rowNode.setRowHeight( parseInt(rowHeight));
+			rowNode.setRowHeight( rowHeight);
+		});
+		this.gridApi.onRowHeightChanged();
 		this.gridApi.redrawRows();
 	}
 	onGridReady = params => {

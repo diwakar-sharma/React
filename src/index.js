@@ -39,6 +39,7 @@ export default class Body extends React.Component {
 		this.state={
 			tableFontSize:getValueFromBrowserCache().fontSize,
 			tableRowHeight:getValueFromBrowserCache().rowHeight
+			//tableRowHeight: 20
 		};
 	}
 	
@@ -57,7 +58,7 @@ updateSettings = (fontsize ,rowHeight , save ) => {
 		}	
 		this.setState({
 			tableFontSize:fontsize,
-			tableRowHeight:20
+			tableRowHeight:rowHeight
 		});
 		this.forceUpdate();
   }
