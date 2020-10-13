@@ -151,8 +151,12 @@ class CustomStatsToolPanel  extends React.Component {
 		//alert("fieldValArr.length:"+fieldValArr.length);
 		if (fieldValArr.length>1)
 			showVal=fieldValArr[0]+"+";
-		 else
-			showVal=fieldValArr[0];
+		else {
+			if(field.type==="text" && field.value ==="*"){
+				showVal = "All";
+			} else
+				showVal=fieldValArr[0];
+		}
 		ele1.innerHTML = showVal;
 		ele1.style.fontWeight = "bold";
 	}
@@ -229,6 +233,9 @@ class CustomStatsToolPanel  extends React.Component {
 		if (!showValue){
 			showValue =ele1.innerHTML;
 			ele2.value = showValue;
+			if(ele2.type==="text"){
+				ele2.value = "*";
+			}
 		}
 		if(showValue)
 			showValue =showValue.trim();
@@ -308,6 +315,9 @@ class CustomStatsToolPanel  extends React.Component {
 		var ele1 = document.getElementById("SpanShow"+i);
 		ele1.style.fontWeight = "normal";
 		}
+		
+		
+		
 	}
 
 	resetfilterFields =()=>{
@@ -611,7 +621,15 @@ class CustomStatsToolPanel  extends React.Component {
 			<div class="btn-group">
 			<input type="hidden" id = "Submit"/>
 				<button id ="resetbutton" onClick={()=>this.resetfilterFields()}>Reset</button>
-				<button id ="applybutton" onClick={()=>this.filterDashboard()}>Apply</button>
+				<button id ="applybutton" onClick={()=>{
+					this.filterDashboard();
+					var eleVAL = document.getElementById("FieldId1").value;
+					if(!eleVAL){
+						//alert("Type Is not selected");
+						return;//eleVAL = "RTEST";
+					}
+					this.props.filterTable(eleVAL);
+				}}>Apply</button>
 			</div>
 		</div>;
 		return htmlsttnt;

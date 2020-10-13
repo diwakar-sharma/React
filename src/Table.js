@@ -31,72 +31,6 @@ export default class Table extends React.Component {
 		//var cellfontSize = this.props.fontSize;
 		//alert("cellfontSize:"+cellfontSize);
 		this.state = {
-         columnDefs: [
-			 {  headerName: "Type",
-				field: "attr_CRRTestType",
-				/*width : 70, */
-				width : 50, 
-				/*flex: 1*/
-			},
-			 { headerName: "Name", 
-			 field: "name",
-			 width  : 125 
-			}, 
-			 { headerName: "State", 
-			 field: 'status',
-			 width  : 90,
-			 /*flex: 1*/
-			},
-			 { headerName: "Prospect P/N",
-			  field: 'attr_CRRPartNumber', 
-			  width  : 100 ,
-			},
-			 { headerName: "Prospect",
-			  field: 'attr_CRRProspectReference',
-			  width  : 115 ,
-			  /*flex: 1*/
-			},
-			 { headerName: "Product Range", 
-			 field: "prospect_product_range",
-			 width  : 120, 
-			 
-			},
-			 { headerName: "Originator", 
-			 field: "attr_Originator_show",
-			 width  : 160 , 
-			 //width  : "auto" , 
-			 
-			},
-			 { headerName: "Technician", 
-			 field: "attr_CRRBenchSpecialist_show",
-			 width  : 160 ,
-			  //width  : "auto" , 
-			},
-			 { headerName: "Bench", 
-			 field: "attr_CRRTestBench_show",
-			 width  : 160 ,
-			  //width  : "auto" , 
-		
-			},
-			 { headerName: "Test End Date", 
-			 field: "state_Complete_actual_show",
-			  width : 115, 
-			},
-			 { headerName: "Result", 
-			 field: "attr_CRRTestResults",
-			 width : 80, 
-			},
-			{ headerName: "Doc", 
-			width : 50, 
-			 /*flex: 1,*/
-			 cellRenderer: function(params) {
-					let newLink = '<img src="'+docicon+'" alt="Carraro" />';
-					return newLink;
-				}
-			 
-			},
-			
-			   ],
 			   defaultColDef: {
 				/*wrapText: true,*/
                /*flex: 1,*/
@@ -119,8 +53,8 @@ export default class Table extends React.Component {
 	    */
 		fontsize = this.props.fontSize;
 		rowHeight = parseInt(this.props.rowHeight);
-		//alert("rowHeight:"+rowHeight);
-		
+		//alert("filter:"+this.props.filterTable);
+		this.defineColumns(this.props.filterTable);
 		
 		this.gridApi.forEachNode(function (rowNode) {
 			//rowNode.setRowHeight( parseInt(rowHeight));
@@ -133,6 +67,7 @@ export default class Table extends React.Component {
     this.gridApi = params.api;
 	this.gridApi.setHeaderHeight(25);
 	var updateData =(data)=>{
+		this.defineColumns(this.props.filterTable);
 		this.setState({rowData:data});
 	}
 	// 	     const httpRequest = new XMLHttpRequest();
@@ -150,6 +85,15 @@ export default class Table extends React.Component {
     //};
 	updateData(jsondata);
   };
+
+    defineColumns = (obj) => {
+	if (obj.includes("RTEST"))
+		this.gridApi.setColumnDefs(colDefsRTEST);
+	else 
+		this.gridApi.setColumnDefs(colDefsRPROT);
+	
+  };
+  
   
 getRowHeight = (params) => {
     return rowHeight;
@@ -176,3 +120,125 @@ getRowHeight = (params) => {
 
   	render = () =>this.prepareTable();
 }
+
+
+
+
+
+
+var colDefsRTEST = [
+	 {  headerName: "Type",
+		field: "attr_CRRTestType",
+		/*width : 70, */
+		width : 50, 
+		/*flex: 1*/
+	},
+	 { headerName: "Name", 
+	 field: "name",
+	 width  : 125 ,
+	/* flex: 1*/
+	}, 
+	 { headerName: "State", 
+	 field: 'status',
+	 width  : 90,
+	 /*flex: 1*/
+	},
+	 { headerName: "Prospect P/N",
+	  field: 'attr_CRRPartNumber', 
+	  width  : 100 ,
+	},
+	 { headerName: "Prospect",
+	  field: 'attr_CRRProspectReference',
+	  width  : 115 ,
+	  /*flex: 1*/
+	},
+	 { headerName: "Product Range", 
+	 field: "prospect_product_range",
+	 width  : 120, 
+	 
+	},
+	 { headerName: "Originator", 
+	 field: "attr_Originator_show",
+	 width  : 160 , 
+	 //width  : "auto" , 
+	 
+	},
+	 { headerName: "Technician", 
+	 field: "attr_CRRBenchSpecialist_show",
+	 width  : 160 ,
+	  //width  : "auto" , 
+	},
+	 { headerName: "Bench", 
+	 field: "attr_CRRTestBench_show",
+	 width  : 160 ,
+	  //width  : "auto" , 
+
+	},
+	 { headerName: "Test End Date", 
+	 field: "state_Complete_actual_show",
+	  width : 115, 
+
+	},
+	 { headerName: "Result", 
+	 field: "attr_CRRTestResults",
+	 width : 80, 
+	},
+	{ headerName: "Doc", 
+	width : 50, 
+	 /*flex: 1,*/
+	 cellRenderer: function(params) {
+			let newLink = '<img src="'+docicon+'" alt="Carraro" />';
+			return newLink;
+		}
+	 
+	},
+]
+
+var colDefsRPROT = [
+	 {  headerName: "Type",
+		field: "attr_CRRTestType",
+		/*width : 70, */
+		width : 100, 
+		/*flex: 1*/
+	},
+	 { headerName: "Name", 
+	 field: "name",
+	 width  : 200 
+	}, 
+	 { headerName: "State", 
+	 field: 'status',
+	 width  : 150,
+	 /*flex: 1*/
+	},
+	 { headerName: "Prospect P/N",
+	  field: 'attr_CRRPartNumber', 
+	  width  : 150 ,
+	},
+	 { headerName: "Prospect",
+	  field: 'attr_CRRProspectReference',
+	  width  : 200 ,
+	  flex: 1
+	},
+	 { headerName: "Product Range", 
+	 field: "prospect_product_range",
+	 width  : 200, 
+	  flex: 1
+	},
+	 { headerName: "Originator", 
+	 field: "attr_Originator_show",
+	 width  : 200 , 
+	 //width  : "auto" , 
+	   flex: 1
+	 
+	},
+
+	{ headerName: "Doc", 
+	width : 80, 
+	 /*flex: 1,*/
+	 cellRenderer: function(params) {
+			let newLink = '<img src="'+docicon+'" alt="Carraro" />';
+			return newLink;
+		}
+	 
+	},
+]

@@ -38,8 +38,8 @@ export default class Body extends React.Component {
 		super();
 		this.state={
 			tableFontSize:getValueFromBrowserCache().fontSize,
-			tableRowHeight:getValueFromBrowserCache().rowHeight
-			//tableRowHeight: 20
+			tableRowHeight:getValueFromBrowserCache().rowHeight,
+			tableFilterJSON:"RTEST"
 		};
 	}
 	
@@ -49,7 +49,8 @@ updateSettings = (fontsize ,rowHeight , save ) => {
 		if (typeof(Storage) !== "undefined") {
 			var json ={
 				"fontsize": fontsize,
-				"rowHeight": rowHeight
+				"rowHeight": rowHeight,
+				
 			}
 			localStorage.setItem("Settings", JSON.stringify(json));
 		} else {
@@ -62,9 +63,14 @@ updateSettings = (fontsize ,rowHeight , save ) => {
 		});
 		this.forceUpdate();
   }
+filterTable = (filterJSON) => {
+	this.setState({
+			tableFilterJSON:filterJSON
+	});
+}
 	render() {
 		var rowHeight = this.props.rowHeight;
-		return <div><Header updateSettings = {this.updateSettings}/><Filter/><Table fontSize={this.state.tableFontSize} rowHeight={this.state.tableRowHeight}/></div>;
+		return <div><Header updateSettings = {this.updateSettings}/><Filter filterTable = {this.filterTable} /><Table filterTable={this.state.tableFilterJSON} fontSize={this.state.tableFontSize} rowHeight={this.state.tableRowHeight}/></div>;
   }
 }
 

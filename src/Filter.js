@@ -65,9 +65,9 @@ export default class Filter extends React.Component {
 		if(ele1.style.visibility=="hidden"){
 			ele1.style.visibility="visible";
 			ele1.style.width="90%";
-			ele2.style.width="calc(100% - 125px)";
 			ele3.style.width="125px";
 			ele4.style.width="125px";
+			ele2.style.width="calc(100% - 125px)";
 		} else {
 			ele1.style.visibility="hidden";
 			ele1.style.width="0%";
@@ -79,7 +79,7 @@ export default class Filter extends React.Component {
 		var htmlsttnt = <div id="SideBarDiv" style={this.divStyle} >
 		<span style={this.filterbuttonStyle} onClick={()=>this.toggleDiv()} id = "Sidebutton" ><img src={expanded} alt="Carraro" width="15px" height="15px"  /></span>
 		<span style={this.fieldHeaderstyle} id="filterlabel">FILTER BY</span>
-		<div style={this.filterdivStyle} id="filterDivForm"><CustomStatsToolPanel/></div>
+		<div style={this.filterdivStyle} id="filterDivForm"><CustomStatsToolPanel filterTable = {this.props.filterTable}/></div>
 		</div>;
 		return htmlsttnt;
 	}
